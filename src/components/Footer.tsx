@@ -1,10 +1,15 @@
 
 import { Link } from 'react-router-dom';
 import { Calendar, Image, Info, Map, Newspaper, Search, Ticket, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Footer = () => {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
+  
   return (
-    <footer className="bg-fifa text-white pt-12 pb-8">
+    <footer className={`bg-fifa text-white pt-12 pb-8 ${isRTL ? 'rtl' : ''}`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and About */}
@@ -13,14 +18,13 @@ const Footer = () => {
               <div className="w-12 h-12 bg-morocco-red rounded-full flex items-center justify-center text-white font-bold text-xl">
                 M30
               </div>
-              <div className="ml-3 text-lg font-display font-bold">
+              <div className={`ml-3 text-lg font-display font-bold ${isRTL ? 'mr-3 ml-0' : ''}`}>
                 <span className="text-white">Morocco</span>
                 <span className="text-morocco-gold"> 2030</span>
               </div>
             </div>
             <p className="text-sm text-gray-300 mb-4">
-              Official website for Morocco's hosting of the FIFA World Cup 2030, featuring match schedules, 
-              stadium information, ticket sales, and tourist guides.
+              {t('footer.about')}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-white hover:text-morocco-gold">
@@ -43,36 +47,36 @@ const Footer = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <Info className="h-4 w-4 mr-2" />
-                  About World Cup 2030
+                  <Info className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  {t('footer.aboutWorldCup')}
                 </Link>
               </li>
               <li>
                 <Link to="/matches" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Match Schedule
+                  <Calendar className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  {t('footer.matchSchedule')}
                 </Link>
               </li>
               <li>
                 <Link to="/stadiums" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <Map className="h-4 w-4 mr-2" />
-                  Stadiums & Cities
+                  <Map className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  {t('footer.stadiumsAndCities')}
                 </Link>
               </li>
               <li>
                 <Link to="/tickets" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <Ticket className="h-4 w-4 mr-2" />
-                  Ticket Information
+                  <Ticket className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  {t('footer.ticketInformation')}
                 </Link>
               </li>
               <li>
                 <Link to="/news" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <Newspaper className="h-4 w-4 mr-2" />
-                  Latest News
+                  <Newspaper className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  {t('footer.latestNews')}
                 </Link>
               </li>
             </ul>
@@ -80,31 +84,31 @@ const Footer = () => {
           
           {/* Services */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Services</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('footer.services')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/tickets" className="text-sm text-gray-300 hover:text-morocco-gold">
-                  Match Tickets
+                  {t('footer.matchTickets')}
                 </Link>
               </li>
               <li>
                 <Link to="/hotels" className="text-sm text-gray-300 hover:text-morocco-gold">
-                  Hotel Reservations
+                  {t('footer.hotelReservations')}
                 </Link>
               </li>
               <li>
                 <Link to="/transportation" className="text-sm text-gray-300 hover:text-morocco-gold">
-                  Transportation
+                  {t('footer.transportation')}
                 </Link>
               </li>
               <li>
                 <Link to="/tours" className="text-sm text-gray-300 hover:text-morocco-gold">
-                  Tours & Attractions
+                  {t('footer.toursAttractions')}
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-sm text-gray-300 hover:text-morocco-gold">
-                  FAQ
+                  {t('footer.faq')}
                 </Link>
               </li>
             </ul>
@@ -112,19 +116,16 @@ const Footer = () => {
           
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact</h3>
-            <p className="text-sm text-gray-300 mb-2">
-              Organizing Committee<br />
-              Morocco 2030 World Cup<br />
-              Rabat, Morocco
+            <h3 className="text-lg font-semibold mb-4">{t('footer.contact')}</h3>
+            <p className="text-sm text-gray-300 mb-2 whitespace-pre-line">
+              {t('footer.address')}
             </p>
-            <p className="text-sm text-gray-300 mb-2">
-              Email: info@morocco2030wc.com<br />
-              Phone: +212 5XX XXX XXX
+            <p className="text-sm text-gray-300 mb-2 whitespace-pre-line">
+              {t('footer.emailPhone')}
             </p>
             <div className="mt-4">
               <Link to="/newsletter" className="text-sm bg-morocco-red hover:bg-red-700 text-white py-2 px-4 rounded-md transition-colors">
-                Subscribe to Newsletter
+                {t('footer.newsletter')}
               </Link>
             </div>
           </div>
@@ -133,22 +134,22 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm text-gray-400 mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} Morocco 2030 World Cup. All rights reserved.
+              {t('footer.copyright', { year: new Date().getFullYear() })}
             </p>
             <div className="flex space-x-6">
               <Link to="/privacy" className="text-sm text-gray-400 hover:text-white">
-                Privacy Policy
+                {t('footer.privacyPolicy')}
               </Link>
               <Link to="/terms" className="text-sm text-gray-400 hover:text-white">
-                Terms of Service
+                {t('footer.termsOfService')}
               </Link>
               <Link to="/accessibility" className="text-sm text-gray-400 hover:text-white">
-                Accessibility
+                {t('footer.accessibility')}
               </Link>
             </div>
           </div>
           <div className="mt-4 text-xs text-center text-gray-500">
-            <p>This is a demo website for the Morocco 2030 World Cup. FIFA and World Cup are registered trademarks.</p>
+            <p>{t('footer.disclaimer')}</p>
           </div>
         </div>
       </div>

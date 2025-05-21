@@ -1,0 +1,61 @@
+
+{
+  "navbar": {
+    "home": "Accueil",
+    "matches": "Matchs",
+    "stadiums": "Stades",
+    "tickets": "Billets",
+    "news": "Actualités",
+    "signIn": "Se Connecter"
+  },
+  "footer": {
+    "about": "Site officiel de l'organisation de la Coupe du Monde FIFA 2030 au Maroc, avec les calendriers des matchs, les informations sur les stades, la vente de billets et des guides touristiques.",
+    "quickLinks": "Liens Rapides",
+    "aboutWorldCup": "À propos de la Coupe du Monde 2030",
+    "matchSchedule": "Calendrier des Matchs",
+    "stadiumsAndCities": "Stades et Villes",
+    "ticketInformation": "Informations sur les Billets",
+    "latestNews": "Dernières Actualités",
+    "services": "Services",
+    "matchTickets": "Billets de Match",
+    "hotelReservations": "Réservations d'Hôtel",
+    "transportation": "Transport",
+    "toursAttractions": "Visites et Attractions",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "address": "Comité d'Organisation\nCoupe du Monde Maroc 2030\nRabat, Maroc",
+    "emailPhone": "Email: info@morocco2030wc.com\nTéléphone: +212 5XX XXX XXX",
+    "newsletter": "S'abonner à la Newsletter",
+    "copyright": "© {{year}} Coupe du Monde Maroc 2030. Tous droits réservés.",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsOfService": "Conditions d'Utilisation",
+    "accessibility": "Accessibilité",
+    "disclaimer": "Ceci est un site de démonstration pour la Coupe du Monde 2030 au Maroc. FIFA et Coupe du Monde sont des marques déposées."
+  },
+  "home": {
+    "hero": {
+      "title": "Vivez la Magie du Maroc à la Coupe du Monde FIFA 2030",
+      "subtitle": "Rejoignez-nous pour une célébration inoubliable du football, de la culture et de l'hospitalité à travers le Maroc, l'Espagne et le Portugal.",
+      "exploreStadiums": "Explorer les Stades",
+      "viewTickets": "Voir les Billets"
+    },
+    "hostCountries": {
+      "title": "Pays Hôtes",
+      "morocco": {
+        "title": "Maroc",
+        "description": "Découvrez l'hospitalité chaleureuse, la riche culture et les paysages magnifiques du Maroc, avec des stades de classe mondiale dans des villes animées de Casablanca à Marrakech.",
+        "discover": "Découvrir le Maroc"
+      },
+      "spain": {
+        "title": "Espagne",
+        "description": "De Madrid à Barcelone, l'Espagne offre des lieux de football emblématiques avec une base de supporters passionnés et un pays imprégné de tradition et de succès footballistiques.",
+        "discover": "Découvrir l'Espagne"
+      },
+      "portugal": {
+        "title": "Portugal",
+        "description": "Le Portugal combine de belles villes côtières avec des stades modernes, offrant aux visiteurs un mélange d'histoire riche et de lieux de football contemporains.",
+        "discover": "Découvrir le Portugal"
+      }
+    }
+  }
+}

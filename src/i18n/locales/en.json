@@ -1,0 +1,61 @@
+
+{
+  "navbar": {
+    "home": "Home",
+    "matches": "Matches",
+    "stadiums": "Stadiums",
+    "tickets": "Tickets",
+    "news": "News",
+    "signIn": "Sign In"
+  },
+  "footer": {
+    "about": "Official website for Morocco's hosting of the FIFA World Cup 2030, featuring match schedules, stadium information, ticket sales, and tourist guides.",
+    "quickLinks": "Quick Links",
+    "aboutWorldCup": "About World Cup 2030",
+    "matchSchedule": "Match Schedule",
+    "stadiumsAndCities": "Stadiums & Cities",
+    "ticketInformation": "Ticket Information",
+    "latestNews": "Latest News",
+    "services": "Services",
+    "matchTickets": "Match Tickets",
+    "hotelReservations": "Hotel Reservations",
+    "transportation": "Transportation",
+    "toursAttractions": "Tours & Attractions",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "address": "Organizing Committee\nMorocco 2030 World Cup\nRabat, Morocco",
+    "emailPhone": "Email: info@morocco2030wc.com\nPhone: +212 5XX XXX XXX",
+    "newsletter": "Subscribe to Newsletter",
+    "copyright": "© {{year}} Morocco 2030 World Cup. All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "accessibility": "Accessibility",
+    "disclaimer": "This is a demo website for the Morocco 2030 World Cup. FIFA and World Cup are registered trademarks."
+  },
+  "home": {
+    "hero": {
+      "title": "Experience the Magic of Morocco at FIFA World Cup 2030",
+      "subtitle": "Join us for an unforgettable celebration of football, culture, and hospitality across Morocco, Spain, and Portugal.",
+      "exploreStadiums": "Explore Stadiums",
+      "viewTickets": "View Tickets"
+    },
+    "hostCountries": {
+      "title": "Host Countries",
+      "morocco": {
+        "title": "Morocco",
+        "description": "Experience the warm hospitality, rich culture, and stunning landscapes of Morocco, featuring world-class stadiums in vibrant cities from Casablanca to Marrakech.",
+        "discover": "Discover Morocco"
+      },
+      "spain": {
+        "title": "Spain",
+        "description": "From Madrid to Barcelona, Spain offers iconic football venues with a passionate fan base and a country steeped in footballing tradition and success.",
+        "discover": "Discover Spain"
+      },
+      "portugal": {
+        "title": "Portugal",
+        "description": "Portugal combines beautiful coastal cities with modern stadiums, offering visitors a blend of rich history and contemporary football venues.",
+        "discover": "Discover Portugal"
+      }
+    }
+  }
+}

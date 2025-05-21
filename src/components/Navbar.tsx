@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
@@ -8,19 +8,35 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Menu, User } from "lucide-react";
+import { ChevronDown, Globe, Languages, Menu, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from '@/i18n/LanguageContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState('English');
+  const { t } = useTranslation();
+  const { currentLanguage, changeLanguage, isRTL } = useLanguage();
   
-  const languages = ['English', 'Français', 'العربية'];
+  const languages = [
+    { code: 'en', label: 'English' },
+    { code: 'fr', label: 'Français' },
+    { code: 'ar', label: 'العربية' }
+  ];
   
-  const handleLanguageChange = (language: string) => {
-    setCurrentLanguage(language);
-    // In a real implementation, this would change the app's language
-    // and potentially adjust text direction for Arabic
+  const handleLanguageChange = (langCode: string) => {
+    changeLanguage(langCode);
+    // Close mobile menu when language changes
+    setIsMenuOpen(false);
   };
+
+  // Apply RTL class to body when language changes
+  useEffect(() => {
+    if (isRTL) {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+  }, [isRTL]);
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -32,7 +48,7 @@ const Navbar = () => {
               <div className="w-12 h-12 bg-morocco-red rounded-full flex items-center justify-center text-white font-bold text-xl">
                 M30
               </div>
-              <div className="ml-3 text-lg font-display font-bold">
+              <div className={`ml-3 text-lg font-display font-bold ${isRTL ? 'rtl:mr-3 rtl:ml-0' : ''}`}>
                 <span className="text-morocco-red">Morocco</span>
                 <span className="text-morocco-green"> 2030</span>
               </div>
@@ -42,36 +58,38 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-8 items-center">
             <Link to="/" className="font-medium hover:text-morocco-red transition-colors">
-              Home
+              {t('navbar.home')}
             </Link>
             <Link to="/matches" className="font-medium hover:text-morocco-red transition-colors">
-              Matches
+              {t('navbar.matches')}
             </Link>
             <Link to="/stadiums" className="font-medium hover:text-morocco-red transition-colors">
-              Stadiums
+              {t('navbar.stadiums')}
             </Link>
             <Link to="/tickets" className="font-medium hover:text-morocco-red transition-colors">
-              Tickets
+              {t('navbar.tickets')}
             </Link>
             <Link to="/news" className="font-medium hover:text-morocco-red transition-colors">
-              News
+              {t('navbar.news')}
             </Link>
             
             {/* Language Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center">
-                  {currentLanguage} <ChevronDown className="ml-1 h-4 w-4" />
+                  <Languages className="mr-2 h-4 w-4" />
+                  {languages.find(lang => lang.code === currentLanguage)?.label || 'English'} 
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 {languages.map((language) => (
                   <DropdownMenuItem 
-                    key={language}
-                    onClick={() => handleLanguageChange(language)}
-                    className={language === currentLanguage ? "bg-muted" : ""}
+                    key={language.code}
+                    onClick={() => handleLanguageChange(language.code)}
+                    className={language.code === currentLanguage ? "bg-muted" : ""}
                   >
-                    {language}
+                    {language.label}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -80,7 +98,7 @@ const Navbar = () => {
             {/* Login Button */}
             <Button className="flex items-center gap-1">
               <User className="h-4 w-4" />
-              Sign In
+              {t('navbar.signIn')}
             </Button>
           </div>
           
@@ -97,19 +115,19 @@ const Navbar = () => {
           <div className="md:hidden py-4 border-t animate-fade-in">
             <div className="flex flex-col space-y-4">
               <Link to="/" className="px-4 py-2 hover:bg-muted rounded-md">
-                Home
+                {t('navbar.home')}
               </Link>
               <Link to="/matches" className="px-4 py-2 hover:bg-muted rounded-md">
-                Matches
+                {t('navbar.matches')}
               </Link>
               <Link to="/stadiums" className="px-4 py-2 hover:bg-muted rounded-md">
-                Stadiums
+                {t('navbar.stadiums')}
               </Link>
               <Link to="/tickets" className="px-4 py-2 hover:bg-muted rounded-md">
-                Tickets
+                {t('navbar.tickets')}
               </Link>
               <Link to="/news" className="px-4 py-2 hover:bg-muted rounded-md">
-                News
+                {t('navbar.news')}
               </Link>
               
               {/* Language Selection */}
@@ -118,12 +136,12 @@ const Navbar = () => {
                 <div className="flex space-x-2">
                   {languages.map((language) => (
                     <Button
-                      key={language}
-                      variant={language === currentLanguage ? "default" : "outline"}
+                      key={language.code}
+                      variant={language.code === currentLanguage ? "default" : "outline"}
                       size="sm"
-                      onClick={() => handleLanguageChange(language)}
+                      onClick={() => handleLanguageChange(language.code)}
                     >
-                      {language}
+                      {language.label}
                     </Button>
                   ))}
                 </div>
@@ -132,7 +150,7 @@ const Navbar = () => {
               <div className="px-4 pt-2">
                 <Button className="w-full">
                   <User className="h-4 w-4 mr-2" />
-                  Sign In
+                  {t('navbar.signIn')}
                 </Button>
               </div>
             </div>
