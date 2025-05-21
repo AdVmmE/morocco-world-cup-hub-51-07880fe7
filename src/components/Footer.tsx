@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Calendar, Image, Info, Map, News, Search, Ticket, User } from 'lucide-react';
+import { Calendar, Image, Info, Map, Newspaper, Search, Ticket, User } from 'lucide-react';
 
 const Footer = () => {
   return (
