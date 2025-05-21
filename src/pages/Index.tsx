@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, Info, Map, News, Ticket } from "lucide-react";
+import { Calendar, Info, Map, Newspaper, Ticket } from "lucide-react";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WorldCupCountdown from '@/components/WorldCupCountdown';
@@ -240,7 +240,7 @@ const Index = () => {
                   <span className="text-xs">Matches</span>
                 </TabsTrigger>
                 <TabsTrigger value="news" className="flex flex-col items-center px-3 py-2 data-[state=active]:text-morocco-red">
-                  <News className="h-5 w-5 mb-1" />
+                  <Newspaper className="h-5 w-5 mb-1" />
                   <span className="text-xs">News</span>
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex flex-col items-center px-3 py-2 data-[state=active]:text-morocco-red">
