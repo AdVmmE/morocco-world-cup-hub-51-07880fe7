@@ -71,7 +71,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/news" className="text-sm text-gray-300 hover:text-morocco-gold flex items-center">
-                  <News className="h-4 w-4 mr-2" />
+                  <Newspaper className="h-4 w-4 mr-2" />
                   Latest News
                 </Link>
               </li>
