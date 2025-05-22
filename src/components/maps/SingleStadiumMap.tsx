@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Stadium } from '@/api/types/stadiums';
 import { Card, CardContent } from '@/components/ui/card';
@@ -19,6 +19,7 @@ L.Icon.Default.mergeOptions({
 interface SingleStadiumMapProps {
   stadium: Stadium;
   height?: string;
+  withCard?: boolean;
 }
 
 // Custom stadium icon
@@ -33,40 +34,62 @@ const stadiumIcon = new L.Icon({
   className: 'stadium-marker'
 });
 
-const SingleStadiumMap: React.FC<SingleStadiumMapProps> = ({ stadium, height = '250px' }) => {
-  return (
-    <Card className="overflow-hidden border shadow-md">
-      <CardContent className="p-0">
-        <div style={{ height }}>
-          <MapContainer
-            style={{ height: '100%', width: '100%' }}
-            center={stadium.coordinates}
-            zoom={12}
-            scrollWheelZoom={false}
-            className="z-0"
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            
-            <Marker 
-              position={stadium.coordinates}
-              icon={stadiumIcon}
-            >
-              <Popup>
-                <div className="w-56 stadium-popup">
-                  <h3 className="font-bold text-base">{stadium.name}</h3>
-                  <p className="text-sm text-gray-600 mb-1">{stadium.city}, Morocco</p>
-                  <p className="text-xs text-gray-500">Capacity: {stadium.capacity.toLocaleString()}</p>
-                </div>
-              </Popup>
-            </Marker>
-          </MapContainer>
-        </div>
-      </CardContent>
-    </Card>
+const SingleStadiumMap: React.FC<SingleStadiumMapProps> = ({ 
+  stadium, 
+  height = '250px',
+  withCard = true
+}) => {
+  // Force map to refresh when component mounts
+  useEffect(() => {
+    // This forces a rerender after the component is added to the DOM
+    const refreshMap = setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+    
+    return () => clearTimeout(refreshMap);
+  }, []);
+
+  const MapContent = (
+    <div style={{ height, width: '100%' }}>
+      <MapContainer
+        style={{ height: '100%', width: '100%' }}
+        center={stadium.coordinates}
+        zoom={13}
+        scrollWheelZoom={false}
+        className="z-0"
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        
+        <Marker 
+          position={stadium.coordinates}
+          icon={stadiumIcon}
+        >
+          <Popup>
+            <div className="w-56 stadium-popup">
+              <h3 className="font-bold text-base">{stadium.name}</h3>
+              <p className="text-sm text-gray-600 mb-1">{stadium.city}, Morocco</p>
+              <p className="text-xs text-gray-500">Capacity: {stadium.capacity.toLocaleString()}</p>
+            </div>
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
+
+  if (withCard) {
+    return (
+      <Card className="overflow-hidden border shadow-md">
+        <CardContent className="p-0">
+          {MapContent}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return MapContent;
 };
 
 export default SingleStadiumMap;
