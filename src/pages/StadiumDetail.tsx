@@ -11,6 +11,7 @@ import { useStadium } from '@/hooks/useStadiums';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import { useMatches } from '@/hooks/useMatches';
+import StadiumMap from '@/components/maps/StadiumMap';
 
 const StadiumDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -182,8 +183,8 @@ const StadiumDetail = () => {
             
             <div>
               <h2 className="text-2xl font-bold mb-4">Stadium Location</h2>
-              <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
-                <p className="text-gray-600">Interactive map coming soon</p>
+              <div className="rounded-lg overflow-hidden mb-4 h-[400px]">
+                {stadium && <StadiumMap stadiums={[stadium]} height="100%" />}
               </div>
               <div className="mt-4 text-sm text-gray-600">
                 <p>Coordinates: {stadium.coordinates[0]}, {stadium.coordinates[1]}</p>
