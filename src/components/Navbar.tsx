@@ -1,21 +1,25 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Globe, Languages, Menu, User } from "lucide-react";
+import { ChevronDown, Globe, Languages, Menu, User, LogOut, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from '@/i18n/LanguageContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Mock authentication state - replace with your actual auth state management
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { t } = useTranslation();
   const { currentLanguage, changeLanguage, isRTL } = useLanguage();
+  const navigate = useNavigate();
   
   const languages = [
     { code: 'en', label: 'English' },
@@ -37,6 +41,12 @@ const Navbar = () => {
       document.body.classList.remove('rtl');
     }
   }, [isRTL]);
+
+  const handleLogout = () => {
+    // Here you would handle logout logic
+    setIsAuthenticated(false);
+    navigate('/');
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -95,11 +105,42 @@ const Navbar = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             
-            {/* Login Button */}
-            <Button className="flex items-center gap-1">
-              <User className="h-4 w-4" />
-              {t('navbar.signIn')}
-            </Button>
+            {/* User Authentication */}
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative flex items-center gap-1 rounded-full">
+                    <div className="h-8 w-8 rounded-full bg-morocco-green flex items-center justify-center text-white">
+                      <User className="h-4 w-4" />
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <User className="h-4 w-4 mr-2" />
+                    {t('profile.profile')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <Ticket className="h-4 w-4 mr-2" />
+                    {t('profile.myTickets')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <Settings className="h-4 w-4 mr-2" />
+                    {t('profile.settings')}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    {t('auth.logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button className="flex items-center gap-1" onClick={() => navigate('/auth')}>
+                <User className="h-4 w-4" />
+                {t('navbar.signIn')}
+              </Button>
+            )}
           </div>
           
           {/* Mobile Menu Button */}
@@ -147,11 +188,34 @@ const Navbar = () => {
                 </div>
               </div>
               
+              {/* Mobile Authentication */}
               <div className="px-4 pt-2">
-                <Button className="w-full">
-                  <User className="h-4 w-4 mr-2" />
-                  {t('navbar.signIn')}
-                </Button>
+                {isAuthenticated ? (
+                  <>
+                    <Link to="/profile" className="flex items-center px-4 py-2 hover:bg-muted rounded-md">
+                      <User className="h-4 w-4 mr-2" />
+                      {t('profile.profile')}
+                    </Link>
+                    <Button 
+                      className="w-full mt-2 bg-red-500 hover:bg-red-600" 
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      {t('auth.logout')}
+                    </Button>
+                  </>
+                ) : (
+                  <Button 
+                    className="w-full" 
+                    onClick={() => {
+                      navigate('/auth');
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    {t('navbar.signIn')}
+                  </Button>
+                )}
               </div>
             </div>
           </div>

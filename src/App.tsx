@@ -12,6 +12,9 @@ import CityDetail from "./pages/CityDetail";
 import MoroccoCities from "./pages/MoroccoCities";
 import Tickets from "./pages/Tickets";
 import News from "./pages/News";
+import Auth from "./pages/Auth";
+import UserProfile from "./pages/UserProfile";
+import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
 import { LanguageProvider } from "./i18n/LanguageContext";
 
@@ -36,6 +39,9 @@ const App = () => (
             <Route path="/morocco-cities" element={<MoroccoCities />} />
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/news" element={<News />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/admin" element={<AdminLogin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
