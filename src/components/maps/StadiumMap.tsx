@@ -8,7 +8,7 @@ import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
 
-// Import Leaflet CSS using a URL (works better with Vite)
+// Import Leaflet CSS directly
 import 'leaflet/dist/leaflet.css';
 
 // Fix for default marker icons in React Leaflet
@@ -52,17 +52,21 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
   const moroccoCenter: [number, number] = [31.7917, -7.0926];
   const defaultZoom = 5;
   
+  // If there's only one stadium, center on it and use higher zoom
+  const mapCenter = stadiums.length === 1 ? stadiums[0].coordinates : moroccoCenter;
+  const mapZoom = stadiums.length === 1 ? 10 : defaultZoom;
+  
   return (
     <Card className="overflow-hidden border shadow-md">
       <CardContent className="p-0">
         <div style={{ height }}>
           <MapContainer
             style={{ height: '100%', width: '100%' }}
+            center={mapCenter}
+            zoom={mapZoom}
             className="z-0"
-            center={moroccoCenter}
-            zoom={defaultZoom}
           >
-            <MapInitializer center={moroccoCenter} zoom={defaultZoom} />
+            <MapInitializer center={mapCenter} zoom={mapZoom} />
             
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

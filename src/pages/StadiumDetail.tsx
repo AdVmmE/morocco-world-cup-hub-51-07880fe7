@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,9 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
 import { useMatches } from '@/hooks/useMatches';
 import StadiumMap from '@/components/maps/StadiumMap';
+
+// Import Leaflet CSS to ensure it's loaded
+import 'leaflet/dist/leaflet.css';
 
 const StadiumDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -184,7 +186,9 @@ const StadiumDetail = () => {
             <div>
               <h2 className="text-2xl font-bold mb-4">Stadium Location</h2>
               <div className="rounded-lg overflow-hidden mb-4 h-[400px]">
-                {stadium && <StadiumMap stadiums={[stadium]} height="100%" />}
+                {stadium && (
+                  <StadiumMap stadiums={[stadium]} height="100%" />
+                )}
               </div>
               <div className="mt-4 text-sm text-gray-600">
                 <p>Coordinates: {stadium.coordinates[0]}, {stadium.coordinates[1]}</p>
