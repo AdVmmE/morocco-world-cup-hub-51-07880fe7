@@ -16,6 +16,7 @@ import Auth from "./pages/Auth";
 import UserProfile from "./pages/UserProfile";
 import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
+import CardDemo from "./pages/CardDemo";
 import { LanguageProvider } from "./i18n/LanguageContext";
 
 // Import i18n initialization
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/cards" element={<CardDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

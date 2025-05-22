@@ -2,9 +2,12 @@
 export interface Ticket {
   id: string;
   matchId: string;
-  category: string;
+  seatType: string;
+  seatNumber: string;
   price: number;
   currency: string;
-  available: number;
-  maxPerPerson: number;
+  purchaseDate: string;
+  status: 'active' | 'used' | 'cancelled' | 'refunded';
+  ownerName?: string;
+  ownerEmail?: string;
 }
