@@ -11,6 +11,25 @@ import { useHostCity } from '@/hooks/useHostCities';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
 
+// Map of city names to appropriate Unsplash images
+const cityImages = {
+  "Casablanca": "https://source.unsplash.com/photo-1577261041320-9cc1bc46fc7a", // Casablanca cityscape
+  "Rabat": "https://source.unsplash.com/photo-1579014483681-b08aafe226c8", // Rabat fortress
+  "Marrakech": "https://source.unsplash.com/photo-1548019979-e7ce31429f68", // Marrakech marketplace
+  "Tangier": "https://source.unsplash.com/photo-1539542222780-720ddb735d62", // Tangier coastal view
+  "Fez": "https://source.unsplash.com/photo-1512958789358-4dac96947982", // Fez medina
+  "Agadir": "https://source.unsplash.com/photo-1596627118111-5b6c7890bc2a", // Agadir beach
+};
+
+// Map of attraction types to appropriate icons from Lucide
+const attractionIcons = {
+  "mosque": <Building className="h-8 w-8 text-morocco-red" />,
+  "market": <MapPin className="h-8 w-8 text-morocco-red" />,
+  "palace": <Building className="h-8 w-8 text-morocco-red" />,
+  "garden": <MapPin className="h-8 w-8 text-morocco-red" />,
+  "default": <MapPin className="h-8 w-8 text-morocco-red" />
+};
+
 const CityDetail = () => {
   const { name } = useParams<{ name: string }>();
   
@@ -50,6 +69,9 @@ const CityDetail = () => {
     );
   }
 
+  // Get the appropriate image for the city, or fallback to the city's image property
+  const cityImage = cityImages[city.name] || city.image;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -57,7 +79,7 @@ const CityDetail = () => {
       <div className="relative">
         <div className="h-80 bg-gray-300 relative">
           <img 
-            src={city.image} 
+            src={cityImage} 
             alt={city.name} 
             className="w-full h-full object-cover"
           />
@@ -124,7 +146,7 @@ const CityDetail = () => {
                     <CardContent className="p-4">
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <MapPin className="h-8 w-8 text-morocco-red" />
+                          {attractionIcons.default}
                         </div>
                         <div>
                           <h3 className="font-semibold text-lg">{attraction}</h3>
