@@ -10,16 +10,7 @@ import Footer from '@/components/Footer';
 import { useHostCity } from '@/hooks/useHostCities';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
-
-// Map of city names to appropriate Unsplash images
-const cityImages = {
-  "Casablanca": "https://source.unsplash.com/photo-1577261041320-9cc1bc46fc7a", // Casablanca cityscape
-  "Rabat": "https://source.unsplash.com/photo-1579014483681-b08aafe226c8", // Rabat fortress
-  "Marrakech": "https://source.unsplash.com/photo-1548019979-e7ce31429f68", // Marrakech marketplace
-  "Tangier": "https://source.unsplash.com/photo-1539542222780-720ddb735d62", // Tangier coastal view
-  "Fez": "https://source.unsplash.com/photo-1512958789358-4dac96947982", // Fez medina
-  "Agadir": "https://source.unsplash.com/photo-1596627118111-5b6c7890bc2a", // Agadir beach
-};
+import { ASSETS } from '@/assets';
 
 // Map of attraction types to appropriate icons from Lucide
 const attractionIcons = {
@@ -69,8 +60,27 @@ const CityDetail = () => {
     );
   }
 
-  // Get the appropriate image for the city, or fallback to the city's image property
-  const cityImage = cityImages[city.name] || city.image;
+  // Get the appropriate image for the city from the assets
+  const getCityImage = () => {
+    switch (city.name) {
+      case 'Casablanca':
+        return ASSETS.cities.casablanca;
+      case 'Rabat':
+        return ASSETS.cities.rabat;
+      case 'Marrakech':
+        return ASSETS.cities.marrakech;
+      case 'Tangier':
+        return ASSETS.cities.tangier;
+      case 'Fez':
+        return ASSETS.cities.fez;
+      case 'Agadir':
+        return ASSETS.cities.agadir;
+      default:
+        return city.image;
+    }
+  };
+
+  const cityImage = getCityImage();
 
   return (
     <div className="min-h-screen flex flex-col">
