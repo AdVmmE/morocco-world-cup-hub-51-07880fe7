@@ -8,6 +8,7 @@ import ErrorDisplay from '@/components/ErrorDisplay';
 import StadiumCard from '@/components/StadiumCard';
 import HostCityCard from '@/components/HostCityCard';
 import StadiumMap from '@/components/maps/StadiumMap';
+import SingleStadiumMap from '@/components/maps/SingleStadiumMap';
 
 // Import Leaflet CSS to ensure it's loaded on this page
 import 'leaflet/dist/leaflet.css';
@@ -44,9 +45,18 @@ const StadiumsTabs: React.FC<StadiumsTabsProps> = ({
         ) : stadiumsError ? (
           <ErrorDisplay onRetry={refetchStadiums} />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-12">
             {stadiums?.map((stadium) => (
-              <StadiumCard key={stadium.id} stadium={stadium} />
+              <div key={stadium.id} className="stadium-container">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <StadiumCard stadium={stadium} />
+                  <div className="flex flex-col">
+                    <h3 className="text-xl font-bold mb-4">{stadium.name} Location</h3>
+                    <SingleStadiumMap stadium={stadium} height="300px" />
+                  </div>
+                </div>
+                <hr className="my-8 border-gray-200" />
+              </div>
             ))}
           </div>
         )}

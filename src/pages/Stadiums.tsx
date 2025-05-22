@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from '@/components/Navbar';
@@ -34,7 +35,7 @@ const Stadiums = () => {
       
       <StadiumsHeader />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
         <Tabs defaultValue="stadiums" onValueChange={setActiveTab}>
           <div className="flex justify-center mb-8">
             <TabsList>
@@ -57,16 +58,20 @@ const Stadiums = () => {
           />
         </Tabs>
         
-        <StadiumsStatistics stadiums={stadiums} />
-        
-        <StadiumsProgress 
-          stadiums={stadiums}
-          isLoading={stadiumsLoading}
-          error={stadiumsError}
-          onRetry={refetchStadiums}
-        />
-        
-        <StadiumsFAQ />
+        {activeTab === 'stadiums' && (
+          <>
+            <StadiumsStatistics stadiums={stadiums} />
+            
+            <StadiumsProgress 
+              stadiums={stadiums}
+              isLoading={stadiumsLoading}
+              error={stadiumsError}
+              onRetry={refetchStadiums}
+            />
+            
+            <StadiumsFAQ />
+          </>
+        )}
       </div>
       
       <Footer />
