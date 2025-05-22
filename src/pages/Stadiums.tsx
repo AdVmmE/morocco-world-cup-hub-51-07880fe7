@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +11,7 @@ import StadiumCard from '@/components/StadiumCard';
 import HostCityCard from '@/components/HostCityCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
+import StadiumMap from '@/components/maps/StadiumMap';
 
 const Stadiums = () => {
   const [activeTab, setActiveTab] = useState('stadiums');
@@ -85,26 +85,22 @@ const Stadiums = () => {
           
           {/* Map Tab */}
           <TabsContent value="map" className="animate-fade-in">
-            <div className="bg-white rounded-lg shadow-sm p-6 text-center">
-              <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
-                <div className="p-8">
-                  <h3 className="text-xl font-bold mb-4">Interactive Map Coming Soon</h3>
-                  <p className="text-gray-600 mb-6">
-                    Our interactive map feature is currently under development. It will allow you to
-                    explore stadium locations, nearby attractions, and transportation options across Morocco.
-                  </p>
-                  <div className="inline-flex gap-4">
-                    <Button disabled className="bg-morocco-green hover:bg-green-700">
-                      Explore Stadiums on Map
-                    </Button>
-                    <Button disabled variant="outline">
-                      View Transportation Routes
-                    </Button>
-                  </div>
-                </div>
-              </div>
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h2 className="text-2xl font-bold mb-4">Morocco Stadium Locations</h2>
+              <p className="text-gray-600 mb-6">
+                Explore the locations of all stadiums hosting the 2030 FIFA World Cup matches in Morocco.
+                Click on any marker to see details about the stadium.
+              </p>
               
-              <div className="mt-8 text-left">
+              {stadiumsLoading ? (
+                <LoadingSpinner size="large" />
+              ) : stadiumsError ? (
+                <ErrorDisplay onRetry={() => refetchStadiums()} />
+              ) : (
+                <StadiumMap stadiums={stadiums || []} height="600px" />
+              )}
+              
+              <div className="mt-8">
                 <h3 className="text-lg font-bold mb-4">Stadium Locations</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {stadiums?.map((stadium) => (

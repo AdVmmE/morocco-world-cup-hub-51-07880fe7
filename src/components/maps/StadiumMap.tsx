@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Stadium } from '@/api/types/stadiums';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Navigation } from 'lucide-react';
+import { MapPin, Route } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -100,7 +100,7 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
                       asChild
                     >
                       <Link to={`/stadium/${stadium.id}`}>
-                        <Navigation className="h-3.5 w-3.5" />
+                        <MapPin className="h-3.5 w-3.5" />
                         <span>View Details</span>
                       </Link>
                     </Button>
