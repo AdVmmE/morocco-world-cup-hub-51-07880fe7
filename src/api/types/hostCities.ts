@@ -4,7 +4,9 @@ export interface HostCity {
   description: string;
   attractions: string[];
   image: string;
+  imageAlt?: string;
   population: number;
   stadium: string;
   distanceFromAirport: number;
 }
+

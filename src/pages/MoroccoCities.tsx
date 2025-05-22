@@ -8,30 +8,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
-import { ASSETS } from '@/assets';
 
 const MoroccoCities = () => {
   const { data: cities, isLoading, error, refetch } = useHostCities();
-
-  // Function to get the image for each city
-  const getCityImage = (cityName: string) => {
-    switch (cityName) {
-      case 'Casablanca':
-        return ASSETS.cities.casablanca;
-      case 'Rabat':
-        return ASSETS.cities.rabat;
-      case 'Marrakech':
-        return ASSETS.cities.marrakech;
-      case 'Tangier':
-        return ASSETS.cities.tangier;
-      case 'Fez':
-        return ASSETS.cities.fez;
-      case 'Agadir':
-        return ASSETS.cities.agadir;
-      default:
-        return '/placeholder.svg';
-    }
-  };
 
   if (isLoading) {
     return (
@@ -75,8 +54,8 @@ const MoroccoCities = () => {
               <Card className="overflow-hidden h-full hover:shadow-lg transition-shadow duration-300">
                 <div className="h-48 relative">
                   <img 
-                    src={getCityImage(city.name)} 
-                    alt={city.name} 
+                    src={city.image} 
+                    alt={city.imageAlt || city.name} 
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">

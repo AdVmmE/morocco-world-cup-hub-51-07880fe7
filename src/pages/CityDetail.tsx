@@ -12,7 +12,6 @@ import CityStats from '@/components/city/CityStats';
 import CityDescription from '@/components/city/CityDescription';
 import CityAttractions from '@/components/city/CityAttractions';
 import CityStadium from '@/components/city/CityStadium';
-import { getCityImage } from '@/components/city/CityImageHelper';
 
 const CityDetail = () => {
   const { name } = useParams<{ name: string }>();
@@ -53,12 +52,10 @@ const CityDetail = () => {
     );
   }
 
-  const cityImage = getCityImage(city.name);
-
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <CityHeader city={city} cityImage={cityImage} />
+      <CityHeader city={city} cityImage={city.image} />
       <div className="container mx-auto px-4">
         <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 -mt-6">
           <CityStats city={city} />
