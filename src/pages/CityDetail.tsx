@@ -2,24 +2,17 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Building, MapPin } from "lucide-react";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useHostCity } from '@/hooks/useHostCities';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorDisplay from '@/components/ErrorDisplay';
-import { ASSETS } from '@/assets';
-
-// Map of attraction types to appropriate icons from Lucide
-const attractionIcons = {
-  "mosque": <Building className="h-8 w-8 text-morocco-red" />,
-  "market": <MapPin className="h-8 w-8 text-morocco-red" />,
-  "palace": <Building className="h-8 w-8 text-morocco-red" />,
-  "garden": <MapPin className="h-8 w-8 text-morocco-red" />,
-  "default": <MapPin className="h-8 w-8 text-morocco-red" />
-};
+import CityHeader from '@/components/city/CityHeader';
+import CityStats from '@/components/city/CityStats';
+import CityDescription from '@/components/city/CityDescription';
+import CityAttractions from '@/components/city/CityAttractions';
+import CityStadium from '@/components/city/CityStadium';
+import { getCityImage } from '@/components/city/CityImageHelper';
 
 const CityDetail = () => {
   const { name } = useParams<{ name: string }>();
@@ -60,142 +53,20 @@ const CityDetail = () => {
     );
   }
 
-  // Get the appropriate image for the city from the assets
-  const getCityImage = () => {
-    switch (city.name) {
-      case 'Casablanca':
-        return ASSETS.cities.casablanca;
-      case 'Rabat':
-        return ASSETS.cities.rabat;
-      case 'Marrakech':
-        return ASSETS.cities.marrakech;
-      case 'Tangier':
-        return ASSETS.cities.tangier;
-      case 'Fez':
-        return ASSETS.cities.fez;
-      case 'Agadir':
-        return ASSETS.cities.agadir;
-      default:
-        return city.image;
-    }
-  };
-
-  const cityImage = getCityImage();
+  const cityImage = getCityImage(city.name);
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
-      <div className="relative">
-        <div className="h-80 bg-gray-300 relative">
-          <img 
-            src={cityImage} 
-            alt={city.name} 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent h-40"></div>
-        </div>
-        
-        <div className="container mx-auto px-4">
-          <div className="relative -mt-20 bg-white rounded-lg shadow-lg p-6 md:p-8">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="absolute top-4 left-4"
-              asChild
-            >
-              <Link to="/">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
-              </Link>
-            </Button>
-            
-            <div className="mb-6 mt-6 md:mt-0">
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                <div>
-                  <h1 className="text-3xl md:text-4xl font-bold">{city.name}</h1>
-                  <p className="text-lg text-gray-600">Host City, Morocco</p>
-                </div>
-                <Badge className="mt-2 md:mt-0 self-start md:self-auto bg-morocco-red text-white">
-                  {city.stadium}
-                </Badge>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <h3 className="text-3xl font-bold text-morocco-red mb-2">{city.population}M</h3>
-                  <p className="text-gray-500">Population</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <h3 className="text-3xl font-bold text-morocco-green mb-2">{city.stadium}</h3>
-                  <p className="text-gray-500">Main Stadium</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <h3 className="text-3xl font-bold text-morocco-gold mb-2">{city.distanceFromAirport} km</h3>
-                  <p className="text-gray-500">Airport Distance</p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">About {city.name}</h2>
-              <p className="text-gray-700 leading-relaxed">{city.description}</p>
-            </div>
-            
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold mb-4">Top Attractions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {city.attractions.map((attraction, index) => (
-                  <Card key={index} className="overflow-hidden">
-                    <CardContent className="p-4">
-                      <div className="flex items-center">
-                        <div className="mr-4">
-                          {attractionIcons.default}
-                        </div>
-                        <div>
-                          <h3 className="font-semibold text-lg">{attraction}</h3>
-                          <p className="text-sm text-gray-500">Tourist Attraction</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Stadium Information</h2>
-              <Card className="overflow-hidden">
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/3 bg-gray-100 p-6 flex items-center justify-center">
-                    <Building className="h-16 w-16 text-morocco-green" />
-                  </div>
-                  <div className="md:w-2/3 p-6">
-                    <h3 className="font-bold text-xl mb-2">{city.stadium}</h3>
-                    <p className="text-gray-600 mb-4">Main venue for World Cup matches in {city.name}</p>
-                    <Button 
-                      variant="outline" 
-                      className="border-morocco-green text-morocco-green hover:bg-morocco-green hover:text-white"
-                      asChild
-                    >
-                      <Link to={`/stadiums`}>
-                        View Stadium Details
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
+      <CityHeader city={city} cityImage={cityImage} />
+      <div className="container mx-auto px-4">
+        <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 -mt-6">
+          <CityStats city={city} />
+          <CityDescription city={city} />
+          <CityAttractions city={city} />
+          <CityStadium city={city} />
         </div>
       </div>
-      
       <Footer />
     </div>
   );
