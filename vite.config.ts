@@ -21,10 +21,10 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: ['leaflet'],
+    include: ['leaflet', 'react-leaflet'],
   },
   css: {
-    // Handle CSS in node_modules, specifically including leaflet.css
+    // Ensure proper handling of CSS files in node_modules
     preprocessorOptions: {
       css: {
         includePaths: ['node_modules'],

@@ -62,8 +62,8 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
         <div style={{ height }}>
           <MapContainer
             style={{ height: '100%', width: '100%' }}
-            center={mapCenter}
-            zoom={mapZoom}
+            center={moroccoCenter} // Initial center, will be adjusted by MapInitializer
+            zoom={defaultZoom} // Initial zoom, will be adjusted by MapInitializer
             className="z-0"
           >
             <MapInitializer center={mapCenter} zoom={mapZoom} />

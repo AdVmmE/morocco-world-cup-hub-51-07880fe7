@@ -9,6 +9,9 @@ import StadiumCard from '@/components/StadiumCard';
 import HostCityCard from '@/components/HostCityCard';
 import StadiumMap from '@/components/maps/StadiumMap';
 
+// Import Leaflet CSS to ensure it's loaded on this page
+import 'leaflet/dist/leaflet.css';
+
 interface StadiumsTabsProps {
   activeTab: string;
   stadiums: Stadium[] | undefined;
@@ -77,8 +80,10 @@ const StadiumsTabs: React.FC<StadiumsTabsProps> = ({
             <LoadingSpinner size="large" />
           ) : stadiumsError ? (
             <ErrorDisplay onRetry={refetchStadiums} />
+          ) : stadiums && stadiums.length > 0 ? (
+            <StadiumMap stadiums={stadiums} height="600px" />
           ) : (
-            <StadiumMap stadiums={stadiums || []} height="600px" />
+            <p className="text-gray-500">No stadiums data available.</p>
           )}
           
           <div className="mt-8">

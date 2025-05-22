@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from '@/components/Navbar';
@@ -10,6 +9,7 @@ import StadiumsTabs from '@/components/stadiums/StadiumsTabs';
 import StadiumsStatistics from '@/components/stadiums/StadiumsStatistics';
 import StadiumsProgress from '@/components/stadiums/StadiumsProgress';
 import StadiumsFAQ from '@/components/stadiums/StadiumsFAQ';
+import 'leaflet/dist/leaflet.css';
 
 const Stadiums = () => {
   const [activeTab, setActiveTab] = useState('stadiums');
