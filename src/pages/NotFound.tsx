@@ -47,6 +47,9 @@ const NotFound = () => {
                 <Link to="/stadiums" className="text-morocco-green hover:underline">
                   Stadium Information
                 </Link>
+                <Link to="/morocco-cities" className="text-morocco-green hover:underline">
+                  Host Cities
+                </Link>
                 <Link to="/tickets" className="text-morocco-green hover:underline">
                   Ticket Sales
                 </Link>
@@ -62,6 +65,3 @@ const NotFound = () => {
       <Footer />
     </div>
   );
-};
-
-export default NotFound;
