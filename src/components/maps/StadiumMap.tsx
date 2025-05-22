@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Stadium } from '@/api/types/stadiums';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -34,6 +34,17 @@ const stadiumIcon = new L.Icon({
   className: 'stadium-marker'
 });
 
+// Map initialization component
+const MapInitializer = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
+  const map = useMap();
+  
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, [center, zoom, map]);
+  
+  return null;
+};
+
 const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) => {
   // Center of Morocco
   const moroccoCenter: [number, number] = [31.7917, -7.0926];
@@ -44,14 +55,14 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
       <CardContent className="p-0">
         <div style={{ height }}>
           <MapContainer
-            center={moroccoCenter}
-            zoom={defaultZoom}
             style={{ height: '100%', width: '100%' }}
             className="z-0"
           >
+            <MapInitializer center={moroccoCenter} zoom={defaultZoom} />
+            
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             
             {stadiums.map((stadium) => (
@@ -60,8 +71,8 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
                 position={stadium.coordinates}
                 icon={stadiumIcon}
               >
-                <Popup className="stadium-popup">
-                  <div className="w-56">
+                <Popup>
+                  <div className="w-56 stadium-popup">
                     <div className="mb-2">
                       <img 
                         src={stadium.image || '/placeholder.svg'} 

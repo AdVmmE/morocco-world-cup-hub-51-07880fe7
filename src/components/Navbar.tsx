@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Globe, Languages, Menu, User, LogOut, Settings } from "lucide-react";
+import { ChevronDown, Globe, Languages, Menu, User, LogOut, Settings, Ticket } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from '@/i18n/LanguageContext';
 
