@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Matches from "./pages/Matches";
 import Stadiums from "./pages/Stadiums";
 import StadiumDetail from "./pages/StadiumDetail";
+import CityDetail from "./pages/CityDetail";
 import Tickets from "./pages/Tickets";
 import News from "./pages/News";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/matches" element={<Matches />} />
             <Route path="/stadiums" element={<Stadiums />} />
             <Route path="/stadium/:id" element={<StadiumDetail />} />
+            <Route path="/city/:name" element={<CityDetail />} />
             <Route path="/tickets" element={<Tickets />} />
             <Route path="/news" element={<News />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
