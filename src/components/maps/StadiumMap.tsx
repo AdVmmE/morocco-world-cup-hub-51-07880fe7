@@ -4,10 +4,12 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Stadium } from '@/api/types/stadiums';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { MapPin, Route } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+
+// Import Leaflet CSS using a URL (works better with Vite)
+import 'leaflet/dist/leaflet.css';
 
 // Fix for default marker icons in React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -57,6 +59,8 @@ const StadiumMap: React.FC<StadiumMapProps> = ({ stadiums, height = '500px' }) =
           <MapContainer
             style={{ height: '100%', width: '100%' }}
             className="z-0"
+            center={moroccoCenter}
+            zoom={defaultZoom}
           >
             <MapInitializer center={moroccoCenter} zoom={defaultZoom} />
             
