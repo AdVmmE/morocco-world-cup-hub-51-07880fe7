@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +8,7 @@ import Footer from '@/components/Footer';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { useAuth } from '@/contexts/AuthContext';
 import { apiClient } from '@/api/client';
-import { Users, Stadium, Calendar, Ticket, TrendingUp, DollarSign } from 'lucide-react';
+import { Users, Building, Calendar, Ticket, TrendingUp, DollarSign } from 'lucide-react';
 
 interface AdminStats {
   total_users: number;
@@ -75,7 +74,7 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Stadiums</CardTitle>
-                <Stadium className="h-4 w-4 text-muted-foreground" />
+                <Building className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stats?.total_stadiums || 0}</div>
@@ -120,7 +119,7 @@ const AdminDashboard = () => {
                   Manage Users
                 </Button>
                 <Button className="w-full justify-start" variant="outline">
-                  <Stadium className="mr-2 h-4 w-4" />
+                  <Building className="mr-2 h-4 w-4" />
                   Manage Stadiums
                 </Button>
                 <Button className="w-full justify-start" variant="outline">
