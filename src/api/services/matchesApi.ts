@@ -1,6 +1,6 @@
 
 import { Match } from '../types/matches';
-import { mockMatches } from '../mockData/matches';
+import { apiClient } from '../client';
 
 /**
  * Matches API
@@ -8,33 +8,30 @@ import { mockMatches } from '../mockData/matches';
 export const MatchesAPI = {
   // Get all matches
   getAll: async (): Promise<Match[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMatches;
+    return apiClient.get<Match[]>('/matches');
   },
 
   // Get match by ID
   getById: async (id: string): Promise<Match | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMatches.find((match) => match.id === id);
+    try {
+      return await apiClient.get<Match>(`/matches/${id}`);
+    } catch (error) {
+      return undefined;
+    }
   },
 
   // Get matches by stadium
   getByStadium: async (stadium: string): Promise<Match[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMatches.filter((match) => match.stadium === stadium);
+    return apiClient.get<Match[]>(`/matches/stadium/${encodeURIComponent(stadium)}`);
   },
 
   // Get matches by team
   getByTeam: async (team: string): Promise<Match[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMatches.filter((match) => match.homeTeam === team || match.awayTeam === team);
+    return apiClient.get<Match[]>(`/matches/team/${encodeURIComponent(team)}`);
   },
 
   // Get matches by date range
   getByDateRange: async (startDate: string, endDate: string): Promise<Match[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMatches.filter((match) => {
-      return match.date >= startDate && match.date <= endDate;
-    });
+    return apiClient.get<Match[]>(`/matches/date-range?start=${startDate}&end=${endDate}`);
   }
 };

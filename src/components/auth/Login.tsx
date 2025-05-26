@@ -15,8 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
-import { Mail, Lock, UserRound } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const loginSchema = z.object({
   email: z.string().email({
@@ -36,6 +38,8 @@ interface LoginProps {
 
 const Login = ({ onForgotPasswordClick }: LoginProps) => {
   const { t } = useTranslation();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -48,21 +52,19 @@ const Login = ({ onForgotPasswordClick }: LoginProps) => {
 
   const onSubmit = async (values: LoginFormValues) => {
     try {
-      // Here you would integrate with your MySQL backend
-      console.log("Login form submitted with:", values);
+      await login(values.email, values.password, values.rememberMe);
       
-      // Mock success for now - replace with actual API call later
       toast({
         title: "Login Successful",
         description: "Welcome back to Morocco World Cup 2030!",
       });
       
-      // You would typically redirect to dashboard here or handle JWT token
-    } catch (error) {
+      navigate('/');
+    } catch (error: any) {
       console.error("Login failed:", error);
       toast({
         title: "Login Failed",
-        description: "Invalid email or password. Please try again.",
+        description: error.message || "Invalid email or password. Please try again.",
         variant: "destructive",
       });
     }
@@ -136,8 +138,8 @@ const Login = ({ onForgotPasswordClick }: LoginProps) => {
             </button>
           </div>
           
-          <Button type="submit" className="w-full bg-morocco-red hover:bg-red-700">
-            {t('auth.signIn')}
+          <Button type="submit" className="w-full bg-morocco-red hover:bg-red-700" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? 'Signing in...' : t('auth.signIn')}
           </Button>
         </form>
       </Form>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +16,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "@/hooks/use-toast";
 import { Mail, Lock, UserRound } from "lucide-react";
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const registerSchema = z.object({
   name: z.string().min(2, {
@@ -29,6 +30,8 @@ const registerSchema = z.object({
     message: "Password must be at least 8 characters",
   }),
   confirmPassword: z.string(),
+  phone: z.string().optional(),
+  country: z.string().optional(),
   termsAccepted: z.boolean().refine(val => val === true, {
     message: "You must accept the terms and conditions",
   }),
@@ -45,6 +48,8 @@ interface RegisterProps {
 
 const Register = ({ onSuccess }: RegisterProps) => {
   const { t } = useTranslation();
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -53,27 +58,34 @@ const Register = ({ onSuccess }: RegisterProps) => {
       email: "",
       password: "",
       confirmPassword: "",
+      phone: "",
+      country: "",
       termsAccepted: false,
     },
   });
 
   const onSubmit = async (values: RegisterFormValues) => {
     try {
-      // Here you would integrate with your MySQL backend
-      console.log("Register form submitted with:", values);
-      
-      // Mock success for now - replace with actual API call later
-      toast({
-        title: "Registration Successful",
-        description: "Welcome to Morocco World Cup 2030! Please sign in with your new account.",
+      await register({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        password_confirmation: values.confirmPassword,
+        phone: values.phone,
+        country: values.country,
       });
       
-      onSuccess();
-    } catch (error) {
+      toast({
+        title: "Registration Successful",
+        description: "Welcome to Morocco World Cup 2030!",
+      });
+      
+      navigate('/');
+    } catch (error: any) {
       console.error("Registration failed:", error);
       toast({
         title: "Registration Failed",
-        description: "There was an error creating your account. Please try again.",
+        description: error.message || "There was an error creating your account. Please try again.",
         variant: "destructive",
       });
     }
@@ -155,6 +167,40 @@ const Register = ({ onSuccess }: RegisterProps) => {
           
           <FormField
             control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <UserRound className="h-4 w-4" />
+                  {t('auth.phone')}
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="123-456-7890" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="country"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <UserRound className="h-4 w-4" />
+                  {t('auth.country')}
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Country" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
             name="termsAccepted"
             render={({ field }) => (
               <FormItem className="flex flex-row items-start space-x-2 space-y-0">
@@ -177,8 +223,8 @@ const Register = ({ onSuccess }: RegisterProps) => {
             )}
           />
           
-          <Button type="submit" className="w-full bg-morocco-green hover:bg-green-700">
-            {t('auth.register')}
+          <Button type="submit" className="w-full bg-morocco-green hover:bg-green-700" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting ? 'Creating account...' : t('auth.register')}
           </Button>
         </form>
       </Form>

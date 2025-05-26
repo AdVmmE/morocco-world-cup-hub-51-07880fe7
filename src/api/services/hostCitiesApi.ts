@@ -1,6 +1,6 @@
 
 import { HostCity } from '../types/hostCities';
-import { mockHostCities } from '../mockData/hostCities';
+import { apiClient } from '../client';
 
 /**
  * Host Cities API
@@ -8,13 +8,15 @@ import { mockHostCities } from '../mockData/hostCities';
 export const HostCitiesAPI = {
   // Get all host cities
   getAll: async (): Promise<HostCity[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockHostCities;
+    return apiClient.get<HostCity[]>('/host-cities');
   },
 
   // Get host city by name
   getByName: async (name: string): Promise<HostCity | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockHostCities.find((city) => city.name === name);
+    try {
+      return await apiClient.get<HostCity>(`/host-cities/${encodeURIComponent(name)}`);
+    } catch (error) {
+      return undefined;
+    }
   }
 };

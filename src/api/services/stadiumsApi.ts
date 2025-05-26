@@ -1,6 +1,6 @@
 
 import { Stadium } from '../types/stadiums';
-import { mockStadiums } from '../mockData/stadiums';
+import { apiClient } from '../client';
 
 /**
  * Stadiums API
@@ -8,20 +8,25 @@ import { mockStadiums } from '../mockData/stadiums';
 export const StadiumsAPI = {
   // Get all stadiums
   getAll: async (): Promise<Stadium[]> => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockStadiums;
+    return apiClient.get<Stadium[]>('/stadiums');
   },
 
   // Get stadium by ID
   getById: async (id: string): Promise<Stadium | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockStadiums.find((stadium) => stadium.id === id);
+    try {
+      return await apiClient.get<Stadium>(`/stadiums/${id}`);
+    } catch (error) {
+      return undefined;
+    }
   },
 
   // Get stadiums by city
   getByCity: async (city: string): Promise<Stadium[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockStadiums.filter((stadium) => stadium.city === city);
+    return apiClient.get<Stadium[]>(`/stadiums?city=${encodeURIComponent(city)}`);
+  },
+
+  // Get stadium matches
+  getMatches: async (stadiumId: string) => {
+    return apiClient.get(`/stadiums/${stadiumId}/matches`);
   }
 };

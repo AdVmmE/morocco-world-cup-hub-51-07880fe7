@@ -1,6 +1,6 @@
 
 import { Ticket } from '../types/tickets';
-import { mockTickets } from '../mockData/tickets';
+import { apiClient } from '../client';
 
 /**
  * Tickets API
@@ -8,37 +8,35 @@ import { mockTickets } from '../mockData/tickets';
 export const TicketsAPI = {
   // Get all tickets
   getAll: async (): Promise<Ticket[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockTickets;
+    return apiClient.get<Ticket[]>('/tickets');
   },
 
   // Get tickets by match ID
   getByMatchId: async (matchId: string): Promise<Ticket[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockTickets.filter((ticket) => ticket.matchId === matchId);
+    return apiClient.get<Ticket[]>(`/tickets/match/${matchId}`);
   },
 
-  // Book tickets (simulated)
-  bookTickets: async (ticketId: string, quantity: number): Promise<{ success: boolean; message: string }> => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    
-    const ticket = mockTickets.find((t) => t.id === ticketId);
-    
-    if (!ticket) {
-      return { success: false, message: 'Ticket not found' };
+  // Book tickets
+  bookTickets: async (ticketId: string, quantity: number, ownerData: any): Promise<{ success: boolean; message: string }> => {
+    try {
+      await apiClient.post(`/tickets/${ticketId}/book`, {
+        quantity,
+        owner_name: ownerData.name,
+        owner_email: ownerData.email,
+      });
+      return { success: true, message: `Successfully booked ${quantity} tickets` };
+    } catch (error: any) {
+      return { success: false, message: error.message || 'Booking failed' };
     }
-    
-    if (quantity > ticket.available) {
-      return { success: false, message: 'Not enough tickets available' };
-    }
-    
-    if (quantity > ticket.maxPerPerson) {
-      return { success: false, message: `Maximum ${ticket.maxPerPerson} tickets per person allowed` };
-    }
-    
-    // In a real app, this would update the database
-    // ticket.available -= quantity;
-    
-    return { success: true, message: `Successfully booked ${quantity} tickets` };
+  },
+
+  // Get user tickets
+  getUserTickets: async () => {
+    return apiClient.get('/user/tickets');
+  },
+
+  // Cancel user ticket
+  cancelTicket: async (userTicketId: string) => {
+    return apiClient.delete(`/user/tickets/${userTicketId}`);
   }
 };

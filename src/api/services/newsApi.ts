@@ -1,6 +1,6 @@
 
 import { NewsItem } from '../types/news';
-import { mockNews } from '../mockData/news';
+import { apiClient } from '../client';
 
 /**
  * News API
@@ -8,29 +8,25 @@ import { mockNews } from '../mockData/news';
 export const NewsAPI = {
   // Get all news
   getAll: async (): Promise<NewsItem[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockNews;
+    return apiClient.get<NewsItem[]>('/news');
   },
 
   // Get news by ID
   getById: async (id: string): Promise<NewsItem | undefined> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockNews.find((news) => news.id === id);
+    try {
+      return await apiClient.get<NewsItem>(`/news/${id}`);
+    } catch (error) {
+      return undefined;
+    }
   },
 
   // Get news by category
   getByCategory: async (category: string): Promise<NewsItem[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockNews.filter((news) => news.category === category);
+    return apiClient.get<NewsItem[]>(`/news/category/${encodeURIComponent(category)}`);
   },
 
   // Search news
   search: async (query: string): Promise<NewsItem[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockNews.filter((news) => {
-      return news.title.toLowerCase().includes(query.toLowerCase()) || 
-             news.summary.toLowerCase().includes(query.toLowerCase()) ||
-             news.content.toLowerCase().includes(query.toLowerCase());
-    });
+    return apiClient.get<NewsItem[]>(`/news/search?q=${encodeURIComponent(query)}`);
   }
 };
